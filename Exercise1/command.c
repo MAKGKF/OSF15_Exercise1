@@ -10,9 +10,26 @@
 
 
 	//TODO FUNCTION COMMENT
+	/* 
+	* Purpose: parses the input provided by the user into characters 
+	* that can be read by the program as commands.  Also allocates 
+	* memory to execute the commands.
+	* Input: input provided by a user or program and an array to hold 
+	* the commands.
+	* Returns: True if the input was succesfully parsed and memory
+	* allocated for the commands.  False if something went wrong.
+	*/
 bool parse_user_input (const char* input, Commands_t** cmd) {
 	
 	//TODO ERROR CHECK INCOMING PARAMETERS
+	if(input == NULL){
+		perror("No value provided for 'input'\n");
+		return false;
+	}
+	if(*cmd == NULL){
+		perror("No commands provided\n");
+		return false;
+	}
 
 	char *string = strdup(input);
 	
@@ -37,10 +54,19 @@ bool parse_user_input (const char* input, Commands_t** cmd) {
 }
 
 	//TODO FUNCTION COMMENT
+	/* 
+	* Purpose: frees the memory used by the commands in the program.
+	* Input: the commands array used by the program.
+	* Returns: nothing.
+	*/
 void destroy_commands(Commands_t** cmd) {
 
 	//TODO ERROR CHECK INCOMING PARAMETERS
-	
+	if (!(*cmd)){
+		perror("No commands retrieved\n");
+		return;
+	}
+
 	for (int i = 0; i < (*cmd)->num_cmds; ++i) {
 		free((*cmd)->cmds[i]);
 	}
